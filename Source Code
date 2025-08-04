@@ -1,0 +1,240 @@
+LOGIN PAGE 
+import 'dart:convert'; 
+import 'package:flutter/material.dart'; 
+import 'package:fluttertoast/fluttertoast.dart'; 
+import 'package:http/http.dart' as http; 
+import 'package:service_app/home_service.dart'; 
+import 'package:service_app/register.dart'; 
+import 'package:service_app/service_register.dart'; 
+import 'package:shared_preferences/shared_preferences.dart'; 
+import 'const.dart'; 
+import 'home.dart'; 
+class LoginDemo extends StatefulWidget {@override 
+_LoginDemoState createState() => _LoginDemoState();} 
+class _LoginDemoState extends State<LoginDemo> { 
+String email = "user@mail.com"; 
+String password = "123456"; 
+showToast(String msg) { 
+Fluttertoast.showToast( 
+msg: msg, 
+toastLength: Toast.LENGTH_SHORT, 
+gravity: ToastGravity.CENTER, 
+timeInSecForIosWeb: 1, 
+backgroundColor: Colors.red, 
+textColor: Colors.white, 
+fontSize: 16.0);} 
+save() async { 
+try { 
+Map<String,String> body={ 
+"username":email, 
+"password":password}; 
+http.Response response=await http.post(Uri.parse(login_url),body: body); 
+print(response.body); 
+if(response.statusCode==200){ 
+Map<String,dynamic> data=jsonDecode(response.body); 
+showToast("Login success"); 
+final SharedPreferences prefs = await SharedPreferences.getInstance(); 
+print(data['token']); 
+await prefs.setString('token', data['token']!); 
+await prefs.setString('id', data['id']!.toString()); 
+if(data['group']=="member"){ 
+print("member"); 
+Navigator.pushReplacement(context, MaterialPageRoute(builder: 
+(context)=>HomePage()));} 
+if(data['group']=="service"){ 
+print("member"); 
+Navigator.pushReplacement(context, MaterialPageRoute(builder: 
+(context)=>ServiceHome())); } } 
+else{ 
+showToast("Login fail");}} 
+catch (e) {
+print(e); 
+showToast("Login fail");}} 
+"Food quality"))); 
+Widget build(BuildContext context) { 
+return Scaffold( 
+backgroundColor: Colors.white, 
+appBar: AppBar( 
+title: Text("Login Page"),), 
+body: SingleChildScrollView( 
+child: Column( 
+children: <Widget>[ 
+SizedBox( 
+height: 30,), 
+Container( 
+child: Text( 
+"Login", 
+style: TextStyle(fontSize: 32),)),{ 
+email = e;},),), 
+Padding( 
+padding: const EdgeInsets.only( 
+left: 15.0, right: 15.0, top: 15, bottom: 0), 
+padding: EdgeInsets.symmetric(horizontal: 15), 
+child: TextField( 
+obscureText: true, 
+decoration: InputDecoration( 
+border: OutlineInputBorder(), 
+labelText: 'Password', 
+hintText: 'Enter secure password'), 
+onChanged: (e) { 
+password = e;},),), 
+InkWell( 
+onTap: () { 
+save();}, 
+child: Container( 
+alignment: Alignment.center, 
+margin: EdgeInsets.all(20), 
+height: 50, 
+width: 250, 
+decoration: BoxDecoration( 
+color: Colors.blue, 
+borderRadius: BorderRadius.circular(20)), 
+child: Text( 
+'Login', 
+style: TextStyle(color: Colors.white, fontSize: 25),),),), 
+Container( 
+child: InkWell( 
+onTap: () { 
+Navigator.push(context, 
+MaterialPageRoute(builder: (context) => Register()));}, 
+child: Text("New User Account - Register")),), 
+SizedBox(height: 20,) 
+Container(
+child: InkWell( 
+onTap: () { 
+Navigator.push(context, 
+MaterialPageRoute(builder: (context) => SRegister()));}, 
+child: Text("New Serviceman Account - Register")),),],),),); 
+} 
+}
+
+HOME PAGE 
+import 'package:flutter/material.dart'; 
+import 'package:service_app/login.dart'; 
+void main() { 
+runApp(const MyApp()); 
+} 
+class MyApp extends StatelessWidget { 
+const MyApp({super.key}); 
+@override 
+Widget build(BuildContext context) { 
+return MaterialApp( 
+title: 'Service app', 
+theme: ThemeData( 
+colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple), 
+useMaterial3: true, 
+), 
+home: LoginDemo(), 
+);   
+}
+
+SERVICE MAN PAGE 
+import 'dart:convert'; 
+import 'package:flutter/material.dart'; 
+import 'package:fluttertoast/fluttertoast.dart'; 
+import 'package:service_app/const.dart'; 
+import 'package:shared_preferences/shared_preferences.dart'; 
+import 'package:http/http.dart' as http; 
+class ServiceManList extends StatefulWidget { 
+const ServiceManList({super.key, required this.sname}); 
+final String sname; 
+@override 
+State<ServiceManList> createState() => _ServiceManListState(); 
+} 
+class _ServiceManListState extends State<ServiceManList> { 
+List services = []; 
+showToast(String msg) { 
+Fluttertoast.showToast( 
+msg: msg, 
+toastLength: Toast.LENGTH_SHORT, 
+gravity: ToastGravity.CENTER, 
+timeInSecForIosWeb: 1, 
+backgroundColor: Colors.red, 
+textColor: Colors.white, 
+fontSize: 16.0);
+} 
+getData(String sname) async { 
+try { 
+final SharedPreferences prefs = await SharedPreferences.getInstance(); 
+String token = prefs.getString('token')!; 
+http.Response response = await 
+http.get(Uri.parse("$serviceman_url?q=$sname"),headers: 
+{'Authorization':"token $token"}); 
+if (response.statusCode == 200) { 
+showToast("get data success"); 
+setState(() { 
+services=jsonDecode(response.body); 
+}); 
+print(services); 
+} else { 
+showToast("Fetch fail"); 
+} 
+} catch (e) { 
+print(e); 
+showToast("Fetch fail"); 
+} 
+} 
+@override 
+void initState() { 
+super.initState(); 
+getData(widget.sname); } 
+@override 
+Widget build(BuildContext context) { 
+return Scaffold( 
+appBar: AppBar( 
+title: Text("Serviceman List"), 
+), 
+body: Container( 
+child: Column( 
+children:  
+[ 
+Container( 
+height: 300, 
+child: ListView.builder( 
+itemCount: services.length, 
+itemBuilder: (context, index) { 
+return Card( 
+margin: const EdgeInsets.all(10), 
+child: Container( 
+margin: EdgeInsets.all(20), 
+child: Column( 
+children: [ 
+Text( "Name: "+services[index]['name']!), 
+Text( "Mobile: "+services[index]['mobile']!), 
+Text( "Email: "+services[index]['email']!), 
+Text( "Experience: "+services[index]['experience']!),
+Text( "Location: "+services[index]['address']!), 
+Text( "Salary: "+services[index]['salary_scale']!),
+
+SERVICE MAN DETAILS 
+from django.db import models 
+from django.contrib.auth.models import User 
+# Create your models here. 
+class AppUser(models.Model): 
+user=models.ForeignKey(to=User,on_delete=models.CASCADE) 
+mobile=models.CharField(max_length=20) 
+address=models.CharField(max_length=200) 
+def todct(self): 
+dct={} 
+dct['email']=self.user.email 
+dct['mobile']=self.mobile 
+dct['group']='member' 
+return dct 
+class Serviceman(models.Model): 
+user=models.ForeignKey(to=User,on_delete=models.CASCADE) 
+service=models.CharField(max_length=50) 
+mobile=models.CharField(max_length=20) 
+address=models.CharField(max_length=200,null=True,blank=True) 
+experience=models.CharField(max_length=200,null=True,blank=True) 
+salary_scale=models.CharField(max_length=100,null=True,blank=True) 
+def todct(self): 
+dct={} 
+dct['email']=self.user.email 
+dct['name']=self.user.first_name if self.user.first_name else "" 
+dct['mobile']=self.mobile 
+dct['service']=self.service 
+dct['address']=self.address if self.address else "" 
+dct['experience']=self.experience if self.experience else "" 
+dct['salary_scale']=self.salary_scale if self.salary_scale else "" 
+dct['group']='service' 
+return dct
