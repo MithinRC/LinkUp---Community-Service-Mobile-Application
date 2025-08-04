@@ -2,6 +2,8 @@
 
 **LinkUp** is a mobile application designed to bridge the gap between individuals seeking household or labor services and skilled service providers within their local communities. Built using **Flutter** for the frontend and **Python Django** for the backend, it offers a seamless and trustworthy platform for booking and delivering services like plumbing, electrical work, and general labor.
 
+---
+
 ## 📌 Project Overview
 
 LinkUp provides a digital platform for users to:
@@ -15,12 +17,16 @@ Service providers can:
 - Manage service requests and appointments
 - Increase visibility within their local area
 
+---
+
 ## 🎯 Objectives
 
 - Simplify the process of finding and booking skilled professionals
 - Empower local service providers with digital visibility
 - Foster community trust through feedback and reviews
 - Enhance communication via real-time chat features
+
+---
 
 ## ⚙️ Tech Stack
 
@@ -33,6 +39,8 @@ Service providers can:
 | IDE              | Android Studio     |
 | Storage          | Django ORM         |
 
+---
+
 ## 🖥️ Features
 
 - 🔐 User & Service Provider Registration/Login
@@ -43,6 +51,8 @@ Service providers can:
 - 🧩 Expandable Categories
 - 🛠 Admin Dashboard via Django
 
+---
+
 ## 📱 UI Screens
 
 - Login / Signup Screens (User & Service Provider)
@@ -52,6 +62,8 @@ Service providers can:
 - Booking Interface
 - Feedback & Rating Module
 
+---
+
 ## 📈 System Architecture
 
 - **Flutter App** → Frontend UI (Cross-platform mobile support)
@@ -59,11 +71,15 @@ Service providers can:
 - **SQL Database** → User, Services, and Booking Management
 - **REST API** → Data Communication Layer
 
+---
+
 ## 🔒 Security
 
 - Authentication using Token-based login
 - Secure data transactions with HTTPS (SSL)
 - Role-based access control for users and service providers
+
+---
 
 ## 🚀 Future Enhancements
 
@@ -74,6 +90,8 @@ Service providers can:
 - Eco-friendly and CSR service categories
 - Augmented Reality (AR) previews
 - Advanced analytics and personalized recommendations
+
+---
 
 ## 🛠 Setup Instructions
 
@@ -99,16 +117,22 @@ Service providers can:
 
 > Ensure the backend server is running and the API endpoints are correctly mapped in the Flutter app.
 
+---
+
 ## 🤝 Team Members
 
 - Kamil S (622121104043)  
 - Kirubasankar K (622121104048)  
 - Mithin R C (622121104059)  
 
+---
+
 ## 📍 Institution
 
 **Paavai Engineering College (Autonomous), Namakkal**  
 Affiliated to Anna University, Chennai
+
+---
 
 ## Screenshot
 ![image alt](https://github.com/MithinRC/LinkUp---Community-Service-Mobile-Application/blob/8b6581139da7747fba0de17eb2c02a7c5900a7ca/Screenshot%202025-08-04%20142432.png)
@@ -117,7 +141,11 @@ Affiliated to Anna University, Chennai
 ![image alt](https://github.com/MithinRC/LinkUp---Community-Service-Mobile-Application/blob/8b6581139da7747fba0de17eb2c02a7c5900a7ca/Screenshot%202025-08-04%20142529.png)
 ![image alt](https://github.com/MithinRC/LinkUp---Community-Service-Mobile-Application/blob/8b6581139da7747fba0de17eb2c02a7c5900a7ca/Screenshot%202025-08-04%20142535.png)
 
+---
+# Certificate of Publication
+![image alt](https://github.com/MithinRC/LinkUp---Community-Service-Mobile-Application/blob/9881b03bd0eaf19095a9c0db03683e327c9f76b4/Screenshot%202025-08-04%20170928.png)
 
+---
 ## 📚 References
 
 Refer to the project report for detailed literature review and technical implementation.
