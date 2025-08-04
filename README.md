@@ -1,4 +1,4 @@
-# 📱 LinkUp – Community Service Mobile Application
+# 📱 LinkUp - Community Service Mobile Application
 
 **LinkUp** is a mobile application designed to bridge the gap between individuals seeking household or labor services and skilled service providers within their local communities. Built using **Flutter** for the frontend and **Python Django** for the backend, it offers a seamless and trustworthy platform for booking and delivering services like plumbing, electrical work, and general labor.
 
